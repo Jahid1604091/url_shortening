@@ -9,11 +9,15 @@ import {
   createRoutesFromElements,
 } from "react-router-dom";
 import Home from "./pages/Home.jsx";
+import List from "./pages/List.jsx";
+import Edit from "./pages/Edit.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
-      <Route path="/" element={<Home />} />
+      <Route path="/" index element={<Home />} />
+      <Route path="/list" element={<List />} />
+      <Route path="/edit/:id" element={<Edit />} />
     </Route>
   )
 );
