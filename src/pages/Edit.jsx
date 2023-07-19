@@ -54,8 +54,6 @@ export default function Edit() {
     }
   };
 
-  console.log(url)
-
   return (<>
     <Title level={2}>Edit Your URL</Title> 
     <Form form={form} onFinish={onFinish} fields={[{name:'url', value:url}]}>

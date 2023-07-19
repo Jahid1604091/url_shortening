@@ -84,12 +84,12 @@ export default function Home() {
         </Space.Compact>
       </Form>
       {shortUrl && (
-        <p>
+        <Text copyable={{text:shortUrl.short_link}}>
           Short URL :{" "}
           <a target="_blank" href={shortUrl.main_url}>
             {shortUrl.short_link}
           </a>{" "}
-        </p>
+        </Text>
       )}
     </Wrapper>
   );
