@@ -1,5 +1,9 @@
+import { List,Typography } from "antd";
+const { Text,Title } = Typography;
 import React from "react";
 import { Link, useOutletContext } from "react-router-dom";
+import {DeleteOutlined,EditOutlined } from '@ant-design/icons';
+
 
 export default function ShortUrl(url) {
   const [urls, setUrls] = useOutletContext();
@@ -19,12 +23,15 @@ export default function ShortUrl(url) {
       }
     }
   }
+  const iconStyle = {
+    fontSize: '150%'
+  }
   return (
-    <>
-      <p>
-        {url?.short_link} || <Link to={`/edit/${url._id}`}>Edit</Link> |{" "}
-        <a onClick={() => ls_del("shortUrls", url._id)}>Delete</a>
-      </p>
-    </>
+    <List>
+      <List.Item  actions={[<Link to={`/edit/${url._id}`}><EditOutlined style={iconStyle} /></Link>, 
+      <a onClick={() => ls_del("shortUrls", url._id)}><DeleteOutlined  style={iconStyle} /></a>]}>
+        <Title level={4}>{url?.short_link} </Title>
+      </List.Item>
+    </List>
   );
 }
