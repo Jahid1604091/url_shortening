@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { nanoid } from "nanoid";
-import { Link, useOutletContext, useParams } from "react-router-dom";
+import { useOutletContext, useParams } from "react-router-dom";
 import Title from "antd/es/typography/Title";
 import { Button, Form, Input, Space } from "antd";
 import { toast } from "react-hot-toast";
@@ -15,15 +14,11 @@ export default function Edit() {
 
   const currentData = urls.find((url) => url._id === id);
 
-  var ls_data = JSON.parse(localStorage.getItem("shortUrls"));
   let index = urls.findIndex(({ _id }) => _id == id);
 
   useEffect(() => {
     setUrl(currentData?.main_url);
   }, [urls]);
-
-  const [shortUrl, setShortUrl] = useState("");
-
 
   const [form] = Form.useForm();
   const [, forceUpdate] = useState({});
@@ -31,8 +26,7 @@ export default function Edit() {
   useEffect(() => {
     forceUpdate({});
   }, []);
-  const onFinish = async ({url}) => {
-   
+  const onFinish = async ({ url }) => {
     try {
       const {
         data: { result },
@@ -49,49 +43,51 @@ export default function Edit() {
       setUrls(updated);
       toast.success("Short URL updated!");
     } catch (error) {
-      toast.error(error.response.data.error)
-
+      toast.error(error.response.data.error);
     }
   };
 
-  return (<>
-    <Title level={2}>Edit Your URL</Title> 
-    <Form form={form} onFinish={onFinish} fields={[{name:'url', value:url}]}>
-      <Space.Compact>
-        <Form.Item
-          name="url"
-          rules={[
-            {
-              required: true,
-              message: "Please input the URL!",
-            },
-          ]}
+  return (
+    <div className="page-100">
+      <div className="section-center">
+        <Title level={2}>Edit Your URL</Title>
+        <Form
+          form={form}
+          onFinish={onFinish}
+          fields={[{ name: "url", value: url }]}
         >
-          <Input placeholder="Original URL"  />
-        </Form.Item>
-
-        <Form.Item shouldUpdate>
-          {() => (
-            <Button
-              type="primary"
-              htmlType="submit"
-              disabled={
-                !form.isFieldsTouched(true) ||
-                !!form
-                  .getFieldsError()
-                  .filter(({ errors }) => errors.length).length
-              }
+          <Space.Compact>
+            <Form.Item
+              name="url"
+              rules={[
+                {
+                  required: true,
+                  message: "Please input the URL!",
+                },
+              ]}
             >
-              Submit
-            </Button>
-          )}
-        </Form.Item>
-      </Space.Compact>
-    </Form>
-    </>
-    // <form onSubmit={handleSubmit}>
-    //   Update Url
-    //   <input type="text" value={url} onChange={(e) => setUrl(e.target.value)} />
-    // </form>
+              <Input placeholder="Original URL" />
+            </Form.Item>
+
+            <Form.Item shouldUpdate>
+              {() => (
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  disabled={
+                    !form.isFieldsTouched(true) ||
+                    !!form
+                      .getFieldsError()
+                      .filter(({ errors }) => errors.length).length
+                  }
+                >
+                  Submit
+                </Button>
+              )}
+            </Form.Item>
+          </Space.Compact>
+        </Form>
+      </div>
+    </div>
   );
 }
